@@ -3,7 +3,7 @@ const faker = require('faker');
 const database = { products: [] };
 
 // eslint-disable-next-line no-plusplus
-for (let i = 1; i <= 100; i++) {
+for (let i = 1; i <= 50; i++) {
   database.products.push({
     id: i,
     name: faker.commerce.productName(),
