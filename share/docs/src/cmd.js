@@ -14,6 +14,8 @@ const fileIn = [
   '../../../ang03/app30/src/app/app-routing.module.ts',
   '../../../ang03/app30/src/app/home/home.component.ts',
   '../../../ang03/app30/src/app/home/home.component.html',
+  '../../../ang03/app30/src/app/data.service.ts',
+  '../../../ang03/app30/src/app/product.ts',
 ];
 const publish = () => {
   remove({ fileOut });

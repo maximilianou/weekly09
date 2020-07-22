@@ -1,24 +1,5 @@
 
 ```
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>App30</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body class="mat-typography">
-  <app-root></app-root>
-</body>
-</html>
-
-```
-
-```
 ng0: 
 	npm install -g @angular/cli	
 ng: 
@@ -44,6 +25,25 @@ ng8:
 	cd app30 && ng generate service data
 ng9:
 	cd app30 && ng generate interface product 
+
+```
+
+```
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>App30</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="mat-typography">
+  <app-root></app-root>
+</body>
+</html>
 
 ```
 
@@ -274,5 +274,92 @@ export class HomeComponent implements OnInit, OnDestroy {
     <button (click)="nextPage()" mat-button>Next</button> 
     <button (click)="lastPage()" mat-button>Last</button> 
 </div>
+
+```
+
+```
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+
+import { throwError } from 'rxjs';
+import { retry, catchError, tap } from 'rxjs/operators';
+
+import { Product } from './product';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+
+  private REST_API_SERVER = "http://localhost:3000/products";
+
+  public first:  string = "";
+  public prev:   string = "";
+  public next:   string = "";
+  public last:   string = "";
+
+  constructor(private httpClient: HttpClient) { 
+
+  }
+
+  handleError(error: HttpErrorResponse){
+    let errorMessage = "Unknown error!";
+    if(error.error instanceof ErrorEvent){
+      errorMessage = `Error: ${error.error.message}`;
+    }else{
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    window.alert(errorMessage);
+    return throwError(errorMessage);
+  }
+
+  public sendGetRequest(){
+    //const options = { params: new HttpParams({fromString: "_page=1&_limit=5"}) };
+    return this.httpClient.get<Product[]>( this.REST_API_SERVER, 
+      { params: new HttpParams( { fromString: "_page=1&_limit=5"} ), 
+          observe: "response" } )
+            .pipe( retry(3), catchError( this.handleError ), tap( res => {
+              console.log(res.headers.get('Link'));
+              this.parseLinkHeader(res.headers.get('Link'))
+            }) );
+  }
+  public sendGetRequestToUrl(url: string){
+    return this.httpClient.get<Product[]>(url, { observe: "response"})
+    .pipe(retry(3), catchError(this.handleError), tap(res => {
+      console.log(res.headers.get('Link'));
+      this.parseLinkHeader( res.headers.get('Link') )
+    }));
+  }
+  parseLinkHeader(header){
+    if(header && header.length === 0){
+      return;
+    }
+    let parts = header.split(',');
+    const links = {};
+    parts.forEach( p => {
+      let section = p.split(';');
+      const url = section[0].replace(/<(.*)>/,'$1').trim();
+      const name = section[1].replace(/rel="(.*)"/, '$1').trim();
+      links[name] = url;
+    });
+    this.first = links["first"];
+    this.prev = links["prev"];
+    this.next = links["next"];
+    this.last = links["last"];
+  }
+
+}
+
+```
+
+```
+export interface Product {
+    id: number;
+    name: string;
+    material: string;
+    price: string;
+    quantity: number;
+    imageUrl: string;
+}
 
 ```
