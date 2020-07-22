@@ -17,9 +17,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.dataService.sendGetRequest().pipe(takeUntil(this.destroy$)).subscribe((res: HttpResponse<Product[]>) => {
-      console.log(res);
-      this.products = res.body;
+    this.dataService.sendGetRequest().pipe(takeUntil(this.destroy$)).subscribe(
+      (res: HttpResponse<Product[]>) => {
+        console.log(res);
+        this.products = res.body;
     });
 
   }
