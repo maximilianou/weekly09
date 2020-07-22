@@ -1,4 +1,4 @@
-
+../../../ang03/Makefile
 ```
 ng0: 
 	npm install -g @angular/cli	
@@ -25,9 +25,9 @@ ng8:
 	cd app30 && ng generate service data
 ng9:
 	cd app30 && ng generate interface product 
-
+../../../ang03/Makefile
 ```
-
+../../../ang03/app30/src/index.html
 ```
 <!doctype html>
 <html lang="en">
@@ -44,25 +44,9 @@ ng9:
   <app-root></app-root>
 </body>
 </html>
-
+../../../ang03/app30/src/index.html
 ```
-
-```
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
-
-if (environment.production) {
-  enableProdMode();
-}
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
-
-```
-
+../../../ang03/app30/src/main.ts
 ```
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -76,9 +60,25 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
-
+../../../ang03/app30/src/main.ts
 ```
+../../../ang03/app30/src/main.ts
+```
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .catch(err => console.error(err));
+../../../ang03/app30/src/main.ts
+```
+../../../ang03/app30/src/app/app.module.ts
 ```
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ɵɵclassMapInterpolate1 } from '@angular/core';
@@ -118,9 +118,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
+../../../ang03/app30/src/app/app.module.ts
 ```
-
+../../../ang03/app30/src/app/app.component.ts
 ```
 import { Component } from '@angular/core';
 
@@ -132,9 +132,9 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'app30';
 }
-
+../../../ang03/app30/src/app/app.component.ts
 ```
-
+../../../ang03/app30/src/app/app.component.html
 ```
 <mat-toolbar color="primary" >
     <h1>
@@ -143,9 +143,9 @@ export class AppComponent {
     <button mat-button routerLink="/">Home</button>
     <button mat-button routerLink="/about">About</button>
 </mat-toolbar>
-<router-outlet></router-outlet>
+<router-outlet></router-outlet>../../../ang03/app30/src/app/app.component.html
 ```
-
+../../../ang03/app30/src/app/app-routing.module.ts
 ```
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -163,9 +163,9 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-
+../../../ang03/app30/src/app/app-routing.module.ts
 ```
-
+../../../ang03/app30/src/app/home/home.component.ts
 ```
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../data.service';
@@ -239,9 +239,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   
 }
-
+../../../ang03/app30/src/app/home/home.component.ts
 ```
-
+../../../ang03/app30/src/app/home/home.component.html
 ```
 <div>
     <button (click)="firstPage()" mat-button>First</button> 
@@ -275,9 +275,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     <button (click)="nextPage()" mat-button>Next</button> 
     <button (click)="lastPage()" mat-button>Last</button> 
 </div>
-
+../../../ang03/app30/src/app/home/home.component.html
 ```
-
+../../../ang03/app30/src/app/data.service.ts
 ```
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
@@ -350,9 +350,9 @@ export class DataService {
   }
 
 }
-
+../../../ang03/app30/src/app/data.service.ts
 ```
-
+../../../ang03/app30/src/app/product.ts
 ```
 export interface Product {
     id: number;
@@ -362,5 +362,5 @@ export interface Product {
     quantity: number;
     imageUrl: string;
 }
-
+../../../ang03/app30/src/app/product.ts
 ```

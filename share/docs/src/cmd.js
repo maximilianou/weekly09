@@ -22,7 +22,7 @@ const publish = () => {
   console.log('removed.');
   fileIn.forEach((file) => {
     console.log('each file.');
-    append({ fileIn: file, fileOut, mark: '\n```\n' });
+    append({ fileIn: file, fileOut, mark: `${file}\n\`\`\`\n` });
   });
 };
 
