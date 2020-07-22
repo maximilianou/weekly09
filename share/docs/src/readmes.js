@@ -18,7 +18,7 @@ const copy = async (cmd) => {
 const append = async (cmd) => {
   try {
     const data = await fs.readFile(cmd.fileIn);
-    await fs.appendFile(cmd.fileOut, `${cmd.fileIn} ${cmd.mark}${data}${cmd.mark}`);
+    await fs.appendFile(cmd.fileOut, `###${cmd.fileIn} ${cmd.mark}${data}${cmd.mark}`);
   } catch (error) {
     console.log(error);
   }
